@@ -20,5 +20,7 @@ class Matakuliah extends Model
         return $this->belongsToMany(Dosen::class);
     }
 
-   
+    public function perkuliahan() {
+        return $this->belongsToMany(Perkuliahan::class);
+    }
 }

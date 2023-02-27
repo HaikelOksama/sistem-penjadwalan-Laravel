@@ -38,7 +38,7 @@ class MatakuliahController extends Controller
     {
         $formFields = $request->validate([
             'nama' => 'required|max:50',
-            'kode' => 'max:10'
+            'kode' => 'max:10|unique:matakuliah'
         ]);
 
         $formFields['kode'] = strtoupper($formFields['kode']);

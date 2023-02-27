@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MatakuliahController;
+use App\Http\Controllers\PerkuliahanController;
+use App\Http\Controllers\RuangKelasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +31,16 @@ Route::controller(MatakuliahController::class)->group(function () {
     Route::get('/matakuliah', 'index')->name('matakuliah.index');
     Route::get('/matakuliah/baru', 'create')->name('matakuliah.create');
     Route::post('/matakuliah', 'store')->name('matakuliah.store');
+});
+
+Route::controller(RuangKelasController::class)->group(function () {
+    Route::get('/ruangkelas', 'index')->name('ruangkelas.index');
+    Route::get('/ruangkelas/baru', 'create')->name('ruangkelas.create');
+    Route::post('/ruangkelas', 'store')->name('ruangkelas.store');
+});
+
+Route::controller(PerkuliahanController::class)->group(function () {
+    Route::get('/perkuliahan', 'index')->name('perkuliahan.index');
+    Route::get('/perkuliahan/baru', 'create')->name('perkuliahan.create');
+    Route::post('/perkuliahan', 'store')->name('perkuliahan.store');
 });

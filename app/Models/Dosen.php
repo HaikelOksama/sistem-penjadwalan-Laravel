@@ -26,4 +26,8 @@ class Dosen extends Model
         return $this->belongsToMany(Perkuliahan::class);
     }
 
+    public function scopeFilterSearch($query, $search) {
+        return $query->where('nama', 'like' , '%'.$search.'%');
+    }
+
 }

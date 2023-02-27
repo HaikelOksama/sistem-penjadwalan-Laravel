@@ -10,15 +10,15 @@
                 @csrf
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input required class="form-control" type="text" name="nama" placeholder="Nama matakuliah">
+                        <input value={{old('nama')}} required class="form-control" type="text" name="nama" placeholder="Nama matakuliah">
                         @error('nama')
                             <code>{{$message}}</code>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="nama">Kode</label>
-                        <input required class="form-control" type="text" name="kode" placeholder="Kode">
-                        @error('nip')
+                        <input value={{old('kode')}} required class="form-control" type="text" name="kode" placeholder="Kode">
+                        @error('kode')
                             <code>{{$message}}</code>
                         @enderror
                     </div>

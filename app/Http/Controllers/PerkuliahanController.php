@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
+use App\Models\DosenMatakuliah;
+use App\Models\Matakuliah;
 use App\Models\Perkuliahan;
+use App\Models\RuangKelas;
 use Illuminate\Http\Request;
 
 class PerkuliahanController extends Controller
@@ -14,7 +18,11 @@ class PerkuliahanController extends Controller
      */
     public function index()
     {
-        //
+        $perkuliahan = Perkuliahan::all();
+        // $first = Perkuliahan::first();
+        // $joined = $first->getFuck($first->id_dosen_matakuliah)->get();
+        // dd($joined);
+        return view('perkuliahan.index', ['perkuliahan' => $perkuliahan]);
     }
 
     /**
@@ -24,7 +32,11 @@ class PerkuliahanController extends Controller
      */
     public function create()
     {
-        //
+        $kelas = RuangKelas::all();
+        $dosenMatkul = DosenMatakuliah::all();
+        $dosen = Dosen::all();
+        $matakuliah = Matakuliah::all();
+        return view('perkuliahan.create', ['kelas' => $kelas, 'dosen' => $dosen , 'matakuliah' => $matakuliah]);
     }
 
     /**
@@ -35,7 +47,15 @@ class PerkuliahanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->input());
+        $dosen = $request->input('dosen');
+        $matkul = $request->input('matakuliah');
+        $verifyDosen = Dosen::find($dosen);
+        $verifyMatkul = $verifyDosen->matakuliah->find($matkul);
+        if($verifyMatkul === null) {
+            return back()->withInput($request->input())->with('error', 'Dosen tidak mengajar matkul');
+        }
+        dd($verifyMatkul);
     }
 
     /**

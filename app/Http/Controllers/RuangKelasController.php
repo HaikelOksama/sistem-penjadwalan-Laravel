@@ -14,7 +14,10 @@ class RuangKelasController extends Controller
      */
     public function index()
     {
-        //
+        $kelas = RuangKelas::orderBy('lokasi', 'desc')
+                ->orderBy('kode', 'asc')
+                ->get();
+        return view('ruangkelas.index', ['ruangkelas' => $kelas]);
     }
 
     /**
@@ -24,7 +27,7 @@ class RuangKelasController extends Controller
      */
     public function create()
     {
-        //
+        return view('ruangkelas.create');
     }
 
     /**
@@ -35,7 +38,15 @@ class RuangKelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formFields = $request->validate([
+            'lokasi' => 'required',
+            'kode' => 'required|max:10',
+        ]);
+        $formFields['kode'] = strtoupper($formFields['kode']);
+        
+        RuangKelas::create($formFields);
+        return redirect()->route('ruangkelas.index')->with('message', 'Kelas berhasil ditambah');
+
     }
 
     /**

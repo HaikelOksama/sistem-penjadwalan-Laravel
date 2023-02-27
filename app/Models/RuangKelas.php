@@ -10,8 +10,14 @@ class RuangKelas extends Model
     use HasFactory;
 
     protected $fillable = [
-        'kode'
+        'kode',
+        'lokasi'
     ];
+
+    public function kampusUtama() {
+        $ruangan = $this->where('lokasi', '=', 'kampus_utama')->get();
+        return $ruangan;
+    }
 
     public function perkuliahan() {
         return $this->hasMany(Perkuliahan::class);

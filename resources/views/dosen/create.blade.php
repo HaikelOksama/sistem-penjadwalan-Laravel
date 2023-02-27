@@ -23,12 +23,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="matkul">Mata Kuliah Diampu</label>
-                        <select class="form-select" name="matkul[]" id="" multiple>
-                            @foreach ($matakuliah as $matkul)
-                                <option value="{{$matkul->id}}">{{$matkul->nama}}</option>
-                            @endforeach
-                        </select>
+                        <legend>Mata Kuliah Diampu</legend>
+                        <div class="d-flex gap-3 px-3 flex-wrap">
+                        @foreach ($matakuliah as $matkul)
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="matkul[]" id="" value="{{$matkul->id}}">
+                            <label class="form-check-label" for="">{{$matkul->nama}} | </label>
+                        </div>
+                        @endforeach
+                        </div>
                     </div>
                     <button type="submit" class="mt-2 btn btn-success">Simpan</button>
                 </form>

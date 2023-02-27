@@ -21,7 +21,7 @@ class DosenController extends Controller
     public function store(Request $request) {
         $formFields = $request->validate([
             'nama' => 'required',
-            'nip' => 'required',
+            'nip' => 'required|unique:dosens',
         ]);
 
         $dosen = Dosen::create($formFields);
