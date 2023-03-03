@@ -14,7 +14,7 @@
                 </div>
                     <div class="modal-body">
                         
-                        <form wire:submit.prevent="store">
+                        <form wire:submit.prevent="updateDosen">
                             <div class="form-group">
                                 <label for="nama">Nama</label>
                                 <input wire:model.defer="nama" required class="form-control" type="text" name="nama" placeholder="Nama lengkap dengan gelar">
@@ -77,6 +77,7 @@
                                 @enderror
                             </div>
                             <div class="modal-footer justify-content-between">
+                                <button wire:click="resetData()" type="button" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>

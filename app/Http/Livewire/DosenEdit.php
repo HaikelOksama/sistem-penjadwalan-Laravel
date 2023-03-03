@@ -37,6 +37,19 @@ class DosenEdit extends Component
         $this->matakuliahSelected = $dosen->matakuliah->pluck('id')->toArray();
     }
 
+    public function updateDosen(){
+        $input = $this->validate([
+            'nama' => 'required',
+            'nip' => 'required|numeric',
+            'matakuliahSelected' => 'required|array',
+        ]);
+        $instance = Dosen::find($this->dosen->id);
+
+        $instance->update($input);
+        $instance->matakuliah()->sync($input['matakuliahSelected']);
+        $this->emit('updated', $instance->nama);
+    }
+
     public function resetData(){
         $this->dosen = null;
         $this->nama = null;

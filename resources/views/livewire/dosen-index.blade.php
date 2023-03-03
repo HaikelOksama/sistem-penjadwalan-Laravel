@@ -1,7 +1,6 @@
 <div>
     <livewire:dosen-create></livewire:dosen-create>
     <livewire:dosen-edit></livewire:dosen-edit>
-    
     <div class="card card-success card-outline">
         <div class="card-header row justify-content-between align-items-center">
             {{-- <a href="{{route('dosen.create')}}" class="col-2 btn btn-primary bg-gradient-blue">Data Baru</a> --}}
@@ -18,7 +17,7 @@
             </div>
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-2" style="max-height: 800px;">
+        <div class="card-body table-responsive p-2" style="max-height: 800px; overflow-y: scroll;">
         <table class="table table-hover table-bordered table-head-fixed text-nowrap">
             <thead>
             <th>
@@ -54,7 +53,7 @@
                     <td>
                         <div class="btn-group d-flex justify-content-lg-around">
                             <a><i title="Edit {{$item->nama}}" data-target="#modal-edit" type="button" data-toggle="modal" wire:click="getDosen({{$item->id}})" role="button" class="fas fa-edit text-success"></i></a>
-                            <a><i title="Hapus {{$item->nama}}" role="button" class="fas fa-trash-restore text-danger"></i></a>
+                            <a><i title="Hapus {{$item->nama}}" wire:click="$emit('confirmDelete', {{$item}})" id="#delete" type="button" role="button" class="fas fa-trash-restore text-danger"></i></a>
                         </div>
                     </td>                                 
                 </tr>
@@ -66,10 +65,29 @@
         </table>
         </div>
         <!-- /.card-body -->
-        <div class="card-footer justify-content-end d-flex">
+        <div class="card-footer justify-content-between d-flex">
             @if (isset($dosen))
-                <h5 class="text-muted">Menampilkan {{$count}} Data</h5>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            {{ $dosen->links() }}
+                        </div>
+                        
+                    </div>
+                </div>
+                <select wire:model="paginateNumber" class="form-control col-1" name="total" id="">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="0">Semua Data</option>
+                </select>
             @endif
         </div>
     </div>
 </div>
+
+<x-slot:sweetalert>
+
+</x-slot:sweetalert>
+
+

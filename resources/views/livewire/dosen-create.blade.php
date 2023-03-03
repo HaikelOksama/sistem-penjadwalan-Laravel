@@ -50,9 +50,14 @@
                                 <code>{{$message}}</code>
                                 @enderror
                             </div>
+                            <h2>{{$dismissState}}</h2>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <div class="btn-group">
+                                    <button type="submit" wire:click="$set('dismissState', false)" class="btn btn-info">Simpan dan Tambah Lagi</button>
+                                    <button type="submit" wire:click="$set('dismissState', true)" class="btn btn-primary">Simpan</button>
+
+                                </div>
                             </div>
                         </form>
                     </div>

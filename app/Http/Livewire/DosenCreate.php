@@ -11,6 +11,7 @@ class DosenCreate extends Component
     public $nama;
     public $nip;
     public $matakuliahInput = [];
+    public $dismissState;
 
     public function render()
     {
@@ -30,7 +31,7 @@ class DosenCreate extends Component
         $dosen->addMatakuliah($input['matakuliahInput']);
 
         $this->clearInput();
-        $this->emit('dosenStored', $dosen);
+        $this->emit('stored', ['instance' => $dosen->nama , 'dismiss' => $this->dismissState]);
     }
 
     private function clearInput() {
