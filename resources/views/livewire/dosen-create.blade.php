@@ -1,11 +1,11 @@
 <div>
     {{-- The whole world belongs to you. --}}
-    <div class="modal fade" id="modal-create" wire:ignore.self>
+    <div class="modal fade" data-backdrop="static" id="modal-create" wire:ignore.self>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Data Dosen</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" wire:click="clearInput" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -26,8 +26,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <legend>Mata Kuliah Diampu</legend>
-                                <div class="row justify-content-center align-items-center">
+                                {{-- <legend>Mata Kuliah Diampu</legend> --}}
+                                {{-- <div class="row justify-content-center align-items-center">
                                     @foreach ($matakuliah as $matkul)
                                     @if ($loop->iteration % 2 == 0)
                                         <div class="col-6">
@@ -45,14 +45,27 @@
                                         </div>
                                     @endif
                                     @endforeach
-                                </div>
+                                </div> --}}
+                                
                                 @error('matakuliahInput')
                                 <code>{{$message}}</code>
                                 @enderror
                             </div>
-                            <h2>{{$dismissState}}</h2>
+                            <div wire:ignore class="form-group">
+                                <legend>Mata Kuliah Diampu</legend>
+                                <select required wire:model="matakuliahInput" name="selected[]" id="#selectCreate" class="select2" multiple data-placeholder="Pilih matakuliah" style="width: 100%;">
+                                @if (isset($matakuliahList))
+                                    @foreach ($matakuliahList as $matkul)
+                                    <option value="{{$matkul->id}}">{{$matkul->nama}}</option>
+                                    @endforeach
+                                @endif
+                                </select>
+                                @error('matakuliahInput')
+                                <code>{{$message}}</code>
+                                @enderror
+                            </div>
                             <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" wire:click="clearInput" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <div class="btn-group">
                                     <button type="submit" wire:click="$set('dismissState', false)" class="btn btn-info">Simpan dan Tambah Lagi</button>
                                     <button type="submit" wire:click="$set('dismissState', true)" class="btn btn-primary">Simpan</button>
@@ -68,4 +81,9 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <x-slot:script>
+        <script>
+           
+        </script>
+    </x-slot:script>
 </div>

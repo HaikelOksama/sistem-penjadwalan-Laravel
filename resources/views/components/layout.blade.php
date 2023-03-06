@@ -10,8 +10,9 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   @vite([
-        'resources/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css',
         'resources/plugins/fontawesome-free/css/all.min.css',
+        'resources/plugins/select2/css/select2.min.css',
+        'resources/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css',
         'resources/dist/css/adminlte.min.css',
   ])
   @livewireStyles
@@ -162,11 +163,12 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script> --}}
+{{$livewire ?? ""}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @vite([
   'resources/plugins/bootstrap/js/bootstrap.bundle.min.js',
   'resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js',
-  'resources/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js',
+  'resources/plugins/select2/js/select2.full.min.js',
   'resources/dist/js/adminlte.min.js',
   'resources/js/app.js',
         ])
@@ -174,10 +176,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-{{$livewire ?? ""}}
+
 
 {{$sweetalert ?? ""}}
+{{$script}}
+<script>
+  function initializeSelect2() {
+      $('#selectMatkul').select2();
+  }
 
+  document.addEventListener('livewire:load', function () {
+      initializeSelect2();
+      console.log('Loaded!');
+  });
+
+</script>
 
 </body>
 <style>

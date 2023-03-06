@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Request;
 use App\Models\Dosen;
 use App\Models\Matakuliah;
 use Livewire\Component;
@@ -14,18 +15,26 @@ class DosenEdit extends Component
     public $nama;
     public $nip;
     public $matakuliahSelected = [];
-    // public $matakuliahInput = [];
+    public $matakuliahInput = [];
+
+    public bool $loadState = false;
+
+    public function init() {
+        $this->loadState = true;
+    }
 
     protected $listeners = [
         'getDosen' => 'showDosen',
+        'select2Changed' => 'handleSelectChanged',
     ];
 
+    public function mount(){
+        $this->matakuliahList = Matakuliah::orderBy('nama', 'asc')->get();
+    }
 
     public function render()
     {
-        $this->matakuliahList = Matakuliah::orderBy('nama', 'asc')->get();
-        
-        $this->emit('getMatakuliah', $this->dosen);
+       
         return view('livewire.dosen-edit');
     }
 
@@ -35,13 +44,22 @@ class DosenEdit extends Component
         $this->nama = $dosen->nama;
         $this->nip = $dosen->nip;
         $this->matakuliahSelected = $dosen->matakuliah->pluck('id')->toArray();
+        $this->emit('getMatakuliah', $this->matakuliahSelected);
+        // $this->matakuliahInput = $dosen->matakuliah->pluck('id')->toArray();
+    }
+
+    public function handleSelectChanged($val) {
+        $this->matakuliahInput = $val;
     }
 
     public function updateDosen(){
+        $this->matakuliahSelected = $this->matakuliahInput;
+
         $input = $this->validate([
             'nama' => 'required',
             'nip' => 'required|numeric',
             'matakuliahSelected' => 'required|array',
+            'matakuliahInput' => 'required|array'
         ]);
         $instance = Dosen::find($this->dosen->id);
 
@@ -55,6 +73,7 @@ class DosenEdit extends Component
         $this->nama = null;
         $this->nip = null;
         $this->matakuliahSelected = [];
-
+        $this->matakuliahInput = [];
+        $this->emit('resetData');
     }
 }

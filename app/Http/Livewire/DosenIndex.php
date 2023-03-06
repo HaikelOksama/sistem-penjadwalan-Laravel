@@ -20,6 +20,7 @@ class DosenIndex extends Component
 
     public $search;
     public $count;
+    public $sortQuery;
 
     protected $listeners = [
         'stored' => 'handleDosenStored',
@@ -27,9 +28,14 @@ class DosenIndex extends Component
         'updated' => 'handleDosenUpdated'
     ];
 
+    public function sortName() {
+        $this->sortQuery = 'name';
+    }
+
     public function render()
     {
         $dosen = Dosen::latest()->
+            when($this->sortQuery == 'name', fn($query) => $query->reorder('nama', 'asc'))->
             when($this->search, fn($query) => $query->FilterSearch($this->search))->paginate($this->paginateNumber);
         $this->count = count($dosen);
         return view('livewire.dosen-index', ['dosen' => $dosen]);

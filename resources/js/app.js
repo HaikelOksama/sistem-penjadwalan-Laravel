@@ -1,5 +1,23 @@
 import './bootstrap';
 
+Livewire.on('loadedComplete', () => {
+  console.log('showed')
+  $('#selectCreate').select2();
+})
+
+$('#modal-create').on('show.bs.modal', function () {
+  $('.select2').select2();
+})
+
+$('#modal-edit').on('show.bs.modal', function () {
+  $('.select2').select2();
+})
+
+$('.select2').on('change', function () {
+  Livewire.emit('select2Changed', $(this).val());
+  console.log('changed')
+})
+
 Livewire.on('confirmDelete', item => {
     Swal.fire({
         title: `Hapus ${item.nama}?`,
@@ -60,8 +78,5 @@ Livewire.on('stored', instance => {
     console.log(state ? 'continue' : 'end')
 })
 
-// Livewire.on('continue', state => {
-
-// })
 
 

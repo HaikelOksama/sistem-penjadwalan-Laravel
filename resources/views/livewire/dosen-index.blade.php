@@ -4,9 +4,9 @@
     <div class="card card-success card-outline">
         <div class="card-header row justify-content-between align-items-center">
             {{-- <a href="{{route('dosen.create')}}" class="col-2 btn btn-primary bg-gradient-blue">Data Baru</a> --}}
-            <button style="width: 100px;" class="col btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
+            <button style="width: auto;" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
             <div class="card-tools col-10 d-flex justify-content-end">
-                <div class="input-group input-group-sm" style="width: 50%;">
+                <div class="input-group input-group-sm" style="width: 40%;">
                     <input wire:model="search" type="text" name="search" class="form-control float-right" placeholder="Search">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-default">
@@ -24,7 +24,10 @@
                 #
             </th>
             <th>
-                Nama Dosen
+                <div class="row justify-content-between align-content-center">
+                    <p>Nama Dosen</p>
+                    <i class="fas fa-arrow-circle-down text-black-50" wire:click="sortName" role="button"></i>
+                </div>
             </th>
             <th>
                 NIP
@@ -63,7 +66,7 @@
             @endif
             </tbody>
         </table>
-        </div>
+        
         <!-- /.card-body -->
         <div class="card-footer justify-content-between d-flex">
             @if (isset($dosen))
@@ -82,6 +85,7 @@
                     <option value="0">Semua Data</option>
                 </select>
             @endif
+        </div>
         </div>
     </div>
 </div>

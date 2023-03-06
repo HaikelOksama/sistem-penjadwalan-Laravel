@@ -31,4 +31,8 @@ class DosenController extends Controller
 
         return redirect()->route('dosen.index')->with('success', $formFields['nama'] . ' Telah ditambahkan.');
     }
+
+    public function update(Request $request) {
+        dd($request->input());
+    }
 }

@@ -11,12 +11,24 @@ class DosenCreate extends Component
     public $nama;
     public $nip;
     public $matakuliahInput = [];
+    public $matakuliahList = [];
     public $dismissState;
+
+    protected $listeners = [
+        'select2Changed' => 'handleSelectChanged',
+    ];
+
+    public function mount() {
+        $this->matakuliahList = Matakuliah::orderBy('nama', 'asc')->get();
+    }
 
     public function render()
     {
-        $matakuliah = Matakuliah::orderBy('nama', 'asc')->get();
-        return view('livewire.dosen-create', ['matakuliah' => $matakuliah]);
+        return view('livewire.dosen-create');
+    }
+
+    public function handleSelectChanged($val) {
+        $this->matakuliahInput = $val;
     }
 
     public function store(){
@@ -34,9 +46,10 @@ class DosenCreate extends Component
         $this->emit('stored', ['instance' => $dosen->nama , 'dismiss' => $this->dismissState]);
     }
 
-    private function clearInput() {
+    public function clearInput() {
         $this->nama = null;
         $this->nip = null;
         $this->matakuliahInput = [];
+        $this->emit('resetData');
     }
 }

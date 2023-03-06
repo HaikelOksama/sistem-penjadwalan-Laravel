@@ -25,6 +25,7 @@ Route::controller(DosenController::class)->group(function () {
     Route::get('/dosen', 'index')->name('dosen.index');
     Route::get('/dosen/baru', 'create')->name('dosen.create');
     Route::post('/dosen', 'store')->name('dosen.store');
+    Route::put('/dosen', 'update')->name('dosen.update');
 });
 
 Route::controller(MatakuliahController::class)->group(function () {
