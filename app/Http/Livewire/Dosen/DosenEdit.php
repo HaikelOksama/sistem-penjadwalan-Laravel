@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dosen;
 
 use Illuminate\Support\Facades\Request;
 use App\Models\Dosen;
@@ -35,7 +35,7 @@ class DosenEdit extends Component
     public function render()
     {
        
-        return view('livewire.dosen-edit');
+        return view('livewire.dosen.dosen-edit');
     }
 
     public function showDosen(Dosen $dosen){

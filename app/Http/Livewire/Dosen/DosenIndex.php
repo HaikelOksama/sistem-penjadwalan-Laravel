@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dosen;
 
 use App\Models\Dosen;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -20,25 +21,31 @@ class DosenIndex extends Component
 
     public $search;
     public $count;
-    public $sortQuery;
+    public bool $sortQuery = true;
 
     protected $listeners = [
         'stored' => 'handleDosenStored',
-        'deleteDosen' => 'handleDosenDelete',
+        'deleteInstance' => 'handleDosenDelete',
         'updated' => 'handleDosenUpdated'
     ];
 
+    //TODO: SORTING NEXT MAYBE???
+
     public function sortName() {
-        $this->sortQuery = 'name';
+        $this->sortQuery = !$this->sortQuery;
     }
 
     public function render()
     {
-        $dosen = Dosen::latest()->
-            when($this->sortQuery == 'name', fn($query) => $query->reorder('nama', 'asc'))->
-            when($this->search, fn($query) => $query->FilterSearch($this->search))->paginate($this->paginateNumber);
+        $dosen = Dosen::
+            when($this->sortQuery, function (Builder $query) {
+                $query->orderBy('nama', 'asc');
+            }, function (Builder $query) {
+                $query->orderBy('nama', 'desc');
+            })
+            ->when($this->search, fn($query) => $query->FilterSearch($this->search))->paginate($this->paginateNumber);
         $this->count = count($dosen);
-        return view('livewire.dosen-index', ['dosen' => $dosen]);
+        return view('livewire.dosen.dosen-index', ['dosen' => $dosen]);
     }
 
     public function handleDosenStored($dosen){
@@ -56,6 +63,8 @@ class DosenIndex extends Component
 
     public function handleDosenDelete($item) {
         $dosen = Dosen::findOrFail($item['id']);
+        $instance = $dosen->nama;
         $dosen->delete();
+        $this->emit('deleted', $instance);
     }
 }

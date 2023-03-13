@@ -26,27 +26,6 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                {{-- <legend>Mata Kuliah Diampu</legend> --}}
-                                {{-- <div class="row justify-content-center align-items-center">
-                                    @foreach ($matakuliah as $matkul)
-                                    @if ($loop->iteration % 2 == 0)
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input wire:model="matakuliahInput" type="checkbox" class="form-check-input" name="matkul[]" id="" value="{{$matkul->id}}">
-                                                <label class="form-check-label" for=""><strong>{{$matkul->nama}}</strong></label>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input wire:model="matakuliahInput" type="checkbox" class="form-check-input" name="matkul[]" id="" value="{{$matkul->id}}">
-                                                <label class="form-check-label" for=""><strong>{{$matkul->nama}}</strong></label>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @endforeach
-                                </div> --}}
-                                
                                 @error('matakuliahInput')
                                 <code>{{$message}}</code>
                                 @enderror

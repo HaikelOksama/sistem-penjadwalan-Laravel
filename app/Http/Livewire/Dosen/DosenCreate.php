@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Dosen;
 
 use App\Models\Dosen;
 use App\Models\Matakuliah;
@@ -24,7 +24,7 @@ class DosenCreate extends Component
 
     public function render()
     {
-        return view('livewire.dosen-create');
+        return view('livewire.dosen.dosen-create');
     }
 
     public function handleSelectChanged($val) {

@@ -28,10 +28,29 @@ Livewire.on('confirmDelete', item => {
         }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-            Livewire.emit('deleteDosen', item)
-            Swal.fire('Aksi Berhasil', '', 'success')
+            Livewire.emit('deleteInstance', item)
+            // Swal.fire('Aksi Berhasil', '', 'success')
         }
         })
+})
+
+Livewire.on('deleted', instance => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+        didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+  
+    Toast.fire({
+    icon: 'info',
+    title: `${instance} Berhasil di Dihapus 🔥`,
+    })
 })
 
 Livewire.on('updated', instance => {
@@ -47,10 +66,15 @@ Livewire.on('updated', instance => {
         }
       })
       
-        Toast.fire({
-          icon: 'success',
-          title: `${instance} Berhasil di Update`
-        })
+    Toast.fire({
+      icon: 'success',
+      title: `${instance} Berhasil di Update`
+    })
+
+    setTimeout(() => {
+      $('.modal').modal('hide')
+      
+    }, 1000);
 })
 
 Livewire.on('stored', instance => {
@@ -75,7 +99,6 @@ Livewire.on('stored', instance => {
     if(state == true) {
         $('.modal').modal('hide')
     }
-    console.log(state ? 'continue' : 'end')
 })
 
 

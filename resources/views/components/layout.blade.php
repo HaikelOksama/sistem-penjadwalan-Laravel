@@ -156,14 +156,7 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-{{-- 
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script> --}}
-{{$livewire ?? ""}}
+@livewireScripts
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @vite([
   'resources/plugins/bootstrap/js/bootstrap.bundle.min.js',
@@ -179,7 +172,7 @@
 
 
 {{$sweetalert ?? ""}}
-{{$script}}
+{{$script ?? ""}}
 <script>
   function initializeSelect2() {
       $('#selectMatkul').select2();

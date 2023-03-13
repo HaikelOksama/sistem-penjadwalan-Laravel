@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Perkuliahan;
 
 use App\Models\Dosen;
+use App\Models\DosenMatakuliah;
 use App\Models\Perkuliahan;
 use App\Models\RuangKelas;
 use Livewire\Component;
@@ -42,7 +43,7 @@ class PerkuliahanCreate extends Component
         $kelasSukajadi = RuangKelas::where('lokasi' , '!=', 'kampus_utama')->get();
         // dd(["kampus utama" => $kelasUtama, "kampus sukajadi" => $kelasSukajadi]);
         $dosen = Dosen::all();
-        return view('livewire.perkuliahan-create', [
+        return view('livewire.perkuliahan.perkuliahan-create', [
             'kelas' => $kelas, 
             'dosen' => $dosen,
             'kelasUtama' => $kelasUtama,
@@ -109,10 +110,6 @@ class PerkuliahanCreate extends Component
                         ->where('hari', '=', $hari)
                         ->whereRaw('TIME(waktu) <= ? and TIME(berakhir) >= ?', [$akhir ,$mulai])
                         ->first();
-                        // ->whereRaw('TIME(waktu) between ? and ?', [$mulai, $akhir])
-                        // ->whereRaw('TIME(waktu) between ? and ?', [$mulai, $akhir])
-                        // ->orWhereRaw('TIME(berakhir) between ? and ?', [$mulai, $akhir])
-                        // ->exists();
         } catch (\Throwable $th) {
             $perkuliahan = null;
         }
@@ -131,38 +128,40 @@ class PerkuliahanCreate extends Component
         $matakuliahId = $this->classmatakuliah;
 
         $getDosen = Dosen::find($dosenId);
+        // dd($getDosen);
         $input = $this->validate([
             'hari' => 'required',
             'waktu' => 'required|date_format:H:i',
             'berakhir' => 'required|date_format:H:i|after:waktu',
             'tahun' => 'required|numeric|digits:4',
             'semester' => 'required|max:3',
-            'kelas' => 'required|max:2',
+            'kelas' => 'required',
             'ruangan' => 'required',
             'classdosen' => 'required',
             'classmatakuliah' => 'required',
         ]);
+    
         
-        $getMatkulDosen = $getDosen->matakuliah->find($matakuliahId);
-        $input['id_kelas'] = $ruangan;
-        $input['id_dosen_matakuliah'] = $getMatkulDosen->id;
-        $input['kelas'] = 'G';
-
-        Perkuliahan::create($input);
-
+        $getMatkulDosen = $getDosen->matakuliah->find($matakuliahId)->toArray();
+        $dosMat = DosenMatakuliah::where('dosen_id' , $dosenId)->where('matakuliah_id', $matakuliahId)->first();
+        // dd($dosMat);
+        // dd($getMatkulDosen['id']);    
+        // $input['id_kelas'] = $ruangan;
+        // $input['id_dosen_matakuliah'] = $getMatkulDosen->id;
+        
+        // dd($input);
+        $instance = Perkuliahan::create([
+            'id_kelas' => $ruangan,
+            'id_dosen_matakuliah' => $dosMat->id,
+            'hari' => $input['hari'],
+            'waktu' => $input['waktu'],
+            'berakhir' => $input['berakhir'],
+            'tahun' => $input['tahun'],
+            'semester' => $input['semester'],
+            'kelas' => $input['kelas'],
+        ]);
+        dd($instance);
         return redirect()->route('perkuliahan.index');
-        // Perkuliahan::create([
-        //     'id_kelas' => $ruangan,
-        //     'id_dosen_matakuliah' => $getMatkulDosen,
-        //     'hari' => $hari,
-        //     'waktu' => $mulai,
-        //     'berakhir' => $akhir,
-        //     'tahun' => $tahun,
-        //     'semester' => $semester,
-        //     'kelas' => 'G'
-        // ]);
-
         
-
     }
 }

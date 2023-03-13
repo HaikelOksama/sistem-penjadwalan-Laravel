@@ -1,10 +1,11 @@
 <div>
-    <livewire:dosen-create></livewire:dosen-create>
-    <livewire:dosen-edit></livewire:dosen-edit>
+    <livewire:dosen.dosen-create></livewire:dosen.dosen-create>
+    <livewire:dosen.dosen-edit></livewire:dosen.dosen-edit>
     <div class="card card-success card-outline">
-        <div class="card-header row justify-content-between align-items-center">
+        <div class="card-header">
             {{-- <a href="{{route('dosen.create')}}" class="col-2 btn btn-primary bg-gradient-blue">Data Baru</a> --}}
-            <button style="width: auto;" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
+            
+            <button style="width: auto; font-size: clamp(12px, 1vw, 20px);" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
             <div class="card-tools col-10 d-flex justify-content-end">
                 <div class="input-group input-group-sm" style="width: 40%;">
                     <input wire:model="search" type="text" name="search" class="form-control float-right" placeholder="Search">
@@ -17,16 +18,24 @@
             </div>
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-2" style="max-height: 800px; overflow-y: scroll;">
-        <table class="table table-hover table-bordered table-head-fixed text-nowrap">
-            <thead>
+        <div class="card-body table-responsive p-0" style="max-height: 800px;">
+        <table class="table table-hover table-bordered table-head-fixed text-nowrap overflow-y-hidden">
+            <thead class="thead-light bg-cyan table-danger">
             <th>
                 #
             </th>
             <th>
                 <div class="row justify-content-between align-content-center">
-                    <p>Nama Dosen</p>
-                    <i class="fas fa-arrow-circle-down text-black-50" wire:click="sortName" role="button"></i>
+                    Nama Dosen
+                    <i class="fas
+                    @if ($sortQuery)
+                        fa-arrow-up 
+                        text-black-50
+                    @else
+                        fa-arrow-down
+                        text-info
+                    @endif
+                    " wire:click="sortName" role="button"></i>
                 </div>
             </th>
             <th>

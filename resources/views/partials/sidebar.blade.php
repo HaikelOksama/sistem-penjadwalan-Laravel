@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-success elevation-4">
+<aside class="main-sidebar sidebar-light-success elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -8,9 +8,9 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="mt-3 p-1 mb-3 d-flex bg-secondary rounded">
+      {{-- <div class="mt-3 p-1 mb-3 d-flex bg-secondary rounded">
           <img src='https://iraisenew.uin-suska.ac.id//~include/iraise/Logo%20UIN%20SUSKA%20Riau.svg' class="img-fluid" alt="User Image">
-      </div>
+      </div> --}}
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -31,15 +31,19 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview pl-2">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('dosen.index')}}" class="nav-link">
+                <a href="{{route('dosen.index')}}" class="nav-link 
+                {{(request()->is('dosen*') ? 'active' : '')}}
+                ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dosen</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('matakuliah.index')}}" class="nav-link">
+                <a href="{{route('matakuliah.index')}}" class="nav-link
+                {{(request()->is('matakuliah*') ? 'active' : '')}}
+                ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Matakuliah</p>
                 </a>

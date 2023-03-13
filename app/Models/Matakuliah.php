@@ -16,6 +16,10 @@ class Matakuliah extends Model
         'nama'
     ];
 
+    public function scopeFilterSearch($query, $search) {
+        return $query->where('nama', 'like' , '%'.$search.'%');
+    }
+
     public function dosen(){
         return $this->belongsToMany(Dosen::class);
     }

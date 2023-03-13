@@ -10,6 +10,7 @@ class DosenController extends Controller
 {
     public function index() {
         $dosen = Dosen::all();
+        session()->flash('page', 'dosen');
         return view('dosen.index' , ['dosen' => $dosen]);
     }
 

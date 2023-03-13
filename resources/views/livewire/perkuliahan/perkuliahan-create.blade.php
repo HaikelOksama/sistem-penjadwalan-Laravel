@@ -20,6 +20,10 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <input type="text" class="form-control" wire:model="kelas">
+            </div>
+            <div class="form-group">
                 <label for="matkul">Ruangan Kelas</label>
                 <select required  wire:change="resetDosen" wire:model="ruangan" class="form-select" name="kelas" id="">
                     <option readonly selected aria-readonly>Pilih Ruangan Kelas</option>
@@ -121,8 +125,8 @@
                 class="form-select selectpicker" 
                 name="dosen" id="">
                     <option selected readonly>Pilih Dosen</option>
-                    @foreach ($dosen as $dosen)
-                        <option value="{{$dosen->id}}">{{$dosen->nama}}</option>
+                    @foreach ($dosen as $item)
+                        <option value="{{$item->id}}">{{$item->nama}}</option>
                     @endforeach
                 </select>
                 @error('classdosen')

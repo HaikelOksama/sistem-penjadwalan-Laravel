@@ -35,54 +35,10 @@
                                     <code>{{$message}}</code>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                
-                                {{-- //default select --}}
-                                {{-- <div class="row justify-content-center align-items-center">
-                                    @if (isset($matakuliahList))
-                                    @foreach ($matakuliahList as $matkul)
-                                    @if ($loop->iteration % 2 == 0)
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input
-                                                wire:model="matakuliahSelected" type="checkbox" class="form-check-input" name="matkul[]" id="matkul_{{ $matkul->id }}" value="{{$matkul->id}}"
-                                                @if (isset($dosen))
-                                                    @if (in_array($matkul->id, $matakuliahSelected))
-                                                    checked
-                                                    @endif                                       
-                                                @endif
-                                                >
-                                                <label class="form-check-label" for=""><strong>{{$matkul->nama}}</strong></label>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input 
-                                                wire:model="matakuliahSelected" type="checkbox" class="form-check-input" name="matkul[]" id="matkul_{{ $matkul->id }}" value="{{$matkul->id}}"
-                                                @if (isset($dosen))
-                                                    @if (in_array($matkul->id, $matakuliahSelected))
-                                                    checked
-                                                    @endif                                       
-                                                @endif
-                                                >
-                                                <label class="form-check-label" for=""><strong>{{$matkul->nama}}</strong></label>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @endforeach
-                                    @endif
-                                    
-                                </div>
-                                  @error('matakuliahInput')
-                                
-                                  <code>{{$message}}</code>
-                                @enderror --}}
-                            </div>
                             
                             <div wire:ignore class="form-group">
                                 <legend>Mata Kuliah Diampu</legend>
-                                <select  required wire:model.defer="matakuliahInput" name="selected[]" id="#selectMatkul" class="select2" multiple data-placeholder="Pilih matakuliah" style="width: 100%;">
+                                <select required wire:model.defer="matakuliahInput" name="selected[]" id="#selectMatkul" class="select2" multiple data-placeholder="Pilih matakuliah" style="width: 100%;">
                                 @if (isset($matakuliahList))
                                     @foreach ($matakuliahList as $matkul)
                                     <option value="{{$matkul->id}}">{{$matkul->nama}}</option>
@@ -122,6 +78,7 @@
        </script>
     </x-slot:script>
 </div>
+
 
 
 
