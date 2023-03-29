@@ -17,8 +17,29 @@ class Perkuliahan extends Model
         'berakhir',
         'tahun',
         'semester',
-        'kelas'
+        'kelas',
+        'ajaran'
     ];
+
+    public function getDayName() {
+        $days = [
+            0 => 'Minggu',
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu'
+        ];
+
+        $model = $this->hari;
+
+        foreach ($days as $day => $value) {
+            if($day == $model) {
+                return $value;
+            }
+        }
+    }
 
     public function dosen() {
         return $this->belongsTo(Dosen::class);
@@ -42,15 +63,6 @@ class Perkuliahan extends Model
     public function getRuangan($ruangan) {
         $ruangan = RuangKelas::find($ruangan);
         return $ruangan;
-    }
-
-    public function getFuck($dosenMatakuliah){
-        $matkul = DosenMatakuliah::find($dosenMatakuliah);
-        return $this->join('dosens', 'dosens.nip', '=', 'dosens.nip')
-                ->join('matakuliah', 'matakuliah.kode', '=', 'matakuliah.kode')
-                ->select('matakuliah.nama as nama_matkul', 'dosens.nama as nama_dosen', 'perkuliahans.*')
-                ->where('dosens.nip' , '=' , $matkul->dosen->nip)
-                ->where('matakuliah.kode' , '=' , $matkul->matakuliah->kode);
     }
 
     public function ruangan() {

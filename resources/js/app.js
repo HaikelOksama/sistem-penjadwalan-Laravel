@@ -1,8 +1,15 @@
 import './bootstrap';
 
-Livewire.on('loadedComplete', () => {
-  console.log('showed')
-  $('#selectCreate').select2();
+$.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
+
+
+Livewire.on('modalOpen', () => {
+  const select2 = document.querySelector('.select2');
+  console.log(select2)
+  $('.select2').select2({
+
+  });
 })
 
 $('#modal-create').on('show.bs.modal', function () {
@@ -20,7 +27,7 @@ $('.select2').on('change', function () {
 
 Livewire.on('confirmDelete', item => {
     Swal.fire({
-        title: `Hapus ${item.nama}?`,
+        title: `Hapus ${item.nama ? item.nama : item.kode}?`,
         showCancelButton: true,
         confirmButtonText: 'Hapus',
         confirmButtonColor: 'red',

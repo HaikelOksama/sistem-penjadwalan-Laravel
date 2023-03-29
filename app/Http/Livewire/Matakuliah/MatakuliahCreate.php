@@ -22,11 +22,12 @@ class MatakuliahCreate extends Component
         $input = $this->validate([
             'nama' => 'required|min:3',
             'kode' => 'required|min:2',
-            'sks' => 'required|min:1|integer|max_digits:1'
+            'sks' => 'required'
         ]);
 
-        $matakuliah = Matakuliah::create($input);
+        
 
+        $matakuliah = Matakuliah::create($input);
         $this->clearInput();
         $this->emit('stored', ['instance' => $matakuliah->nama , 'dismiss' => $this->dismissState]);
     }

@@ -27,7 +27,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="nama">SKS</label>
-                                <input wire:model.defer="sks" max="3" min="1" required class="form-control" type="number" value="2" placeholder="Jumlah SKS">
+                                <select required class="form-control" wire:model.defer="sks" name="" id="">
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
                                 @error('sks')
                                     <code>{{$message}}</code>
                                 @enderror

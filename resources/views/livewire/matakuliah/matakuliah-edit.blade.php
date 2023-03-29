@@ -1,6 +1,6 @@
 <div>
     {{-- The whole world belongs to you. --}}
-    <div class="modal fade" data-backdrop="static" id="modal-edit" wire:ignore.self>
+    <div class="modal fade" data-backdrop="static" id="modal-edit-{{$matakuliahClass->id}}" wire:ignore.self>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div wire:loading.class.shortest="overlay" role="status">
@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-header">
                     <h4 class="modal-title">Data Matakuliah</h4>
-                    <button type="button" wire:click="clearInput" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -30,14 +30,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="nama">SKS</label>
-                                <input wire:model.defer="sks" max="3" min="1" required class="form-control" type="number">
+                                <select required class="form-control" wire:model.defer="sks" name="" id="">
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
                                 @error('sks')
                                     <code>{{$message}}</code>
                                 @enderror
                             </div>
                             
                             <div class="modal-footer justify-content-between">
-                                <button type="button" wire:click="clearInput" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <div class="btn-group">
                         
                                     <button type="submit" class="btn btn-primary">Simpan</button>

@@ -13,8 +13,15 @@
                         <form wire:submit.prevent="store">
                             <div class="form-group">
                                 <label for="nama">Nama</label>
-                                <input wire:model="nama" required class="form-control" type="text" name="nama" placeholder="Nama lengkap dengan gelar">
+                                <input wire:model="nama" wire:blur="generateInisial" required class="form-control" type="text" name="nama" placeholder="Nama lengkap dengan gelar">
                                 @error('nama')
+                                    <code>{{$message}}</code>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">Inisial Dosen</label>
+                                <input wire:model="inisial" required class="form-control" type="text" name="inisial" placeholder="Nama Inisial">
+                                @error('inisial')
                                     <code>{{$message}}</code>
                                 @enderror
                             </div>
@@ -60,9 +67,6 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <x-slot:script>
-        <script>
-           
-        </script>
-    </x-slot:script>
+       
+
 </div>

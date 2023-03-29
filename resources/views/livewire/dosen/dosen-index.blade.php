@@ -5,7 +5,7 @@
         <div class="card-header">
             {{-- <a href="{{route('dosen.create')}}" class="col-2 btn btn-primary bg-gradient-blue">Data Baru</a> --}}
             
-            <button style="width: auto; font-size: clamp(12px, 1vw, 20px);" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
+            <button wire:click="$emit('modalOpen')" style="width: auto; font-size: clamp(12px, 1vw, 20px);" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
             <div class="card-tools col-10 d-flex justify-content-end">
                 <div class="input-group input-group-sm" style="width: 40%;">
                     <input wire:model="search" type="text" name="search" class="form-control float-right" placeholder="Search">

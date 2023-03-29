@@ -59,6 +59,7 @@ class DosenIndex extends Component
     public function getDosen($id) {
         $dosen = Dosen::find($id);
         $this->emit('getDosen', $dosen);
+        $this->emit('modalOpen');
     }
 
     public function handleDosenDelete($item) {

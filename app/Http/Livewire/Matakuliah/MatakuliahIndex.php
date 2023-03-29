@@ -9,11 +9,12 @@ use Livewire\WithPagination;
 class MatakuliahIndex extends Component
 {
 
-    // use WithPagination;
-    // protected $paginationTheme = 'bootstrap';
-    // public $paginateNumber = 10;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    public $paginateNumber = 10;
 
-    public $matakuliah;
+    public $listMatakuliah;
+    // public $matakuliah;
     public $search;
 
     protected $listeners = [
@@ -22,14 +23,18 @@ class MatakuliahIndex extends Component
         'updated' => 'handleMatakuliahUpdated'
     ];
 
+    public function mount(){
+        $this->listMatakuliah = Matakuliah::all();
+    }
+
     public function render()
     {
-        $this->matakuliah = Matakuliah::orderBy('nama', 'asc')->get();
-        if(isset($this->search)){
-            $this->matakuliah = Matakuliah::when($this->search, fn ($query) => $query->filterSearch($this->search))->get();
-        }
+        $matakuliah = Matakuliah::orderBy('nama', 'asc')
+        ->when($this->search, fn ($query) => $query->filterSearch($this->search))
+        ->paginate($this->paginateNumber);
 
-        return view('livewire.matakuliah.matakuliah-index');
+
+        return view('livewire.matakuliah.matakuliah-index', ['matakuliah' => $matakuliah]);
     }
 
     public function handleMatakuliahStored($instance){

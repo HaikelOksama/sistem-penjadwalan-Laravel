@@ -49,7 +49,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('ruangkelas.index')}}" class="nav-link">
+                <a href="{{route('ruangkelas.index')}}" class="nav-link
+                {{(request()->is('ruangkelas*') ? 'active' : '')}}
+                ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ruangan</p>
                 </a>

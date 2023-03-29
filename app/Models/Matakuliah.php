@@ -13,7 +13,8 @@ class Matakuliah extends Model
 
     protected $fillable = [
         'kode',
-        'nama'
+        'nama',
+        'sks'
     ];
 
     public function scopeFilterSearch($query, $search) {

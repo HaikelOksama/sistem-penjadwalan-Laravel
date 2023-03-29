@@ -11,7 +11,8 @@ class Dosen extends Model
 
     protected $fillable = [
         'nama',
-        'nip'
+        'nip',
+        'inisial'
     ];
 
     public function matakuliah() {

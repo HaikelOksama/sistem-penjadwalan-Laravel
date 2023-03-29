@@ -2,8 +2,11 @@
     {{-- <livewire:dosen.dosen-create></livewire:dosen.dosen-create>
     <livewire:dosen.dosen-edit></livewire:dosen.dosen-edit> --}}
     @livewire('matakuliah.matakuliah-create')
-    @livewire('matakuliah.matakuliah-edit')
-    
+
+    @foreach ($matakuliah as $item)
+       @livewire('matakuliah.matakuliah-edit', ['matakuliah' => $item], key($item->id))
+    @endforeach
+
     <div class="card card-success card-outline">
         <div class="card-header">
             {{-- <a href="{{route('dosen.create')}}" class="col-2 btn btn-primary bg-gradient-blue">Data Baru</a> --}}
@@ -40,17 +43,17 @@
             </th>
 
             </thead>
-            <tbody wire:poll.5000ms>
+            <tbody>
             @if (isset($matakuliah))
                 @foreach ($matakuliah as $item)
                 <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$item->nama}}</td>
                     <td>{{$item->kode}}</td>
-                    <td>3</td>  
+                    <td>{{$item->sks}}</td>  
                     <td>
                         <div class="btn-group d-flex justify-content-lg-around ">
-                            <a><i title="Edit {{$item->nama}}" data-target="#modal-edit" type="button" data-toggle="modal" wire:click="getMatakuliah({{$item->id}})" role="button" class="fas fa-edit text-success"></i></a>
+                            <a><i title="Edit {{$item->nama}}" data-target="#modal-edit-{{$item->id}}" type="button" data-toggle="modal" wire:click="getMatakuliah({{$item->id}})" role="button" class="fas fa-edit text-success"></i></a>
                             <a><i title="Hapus {{$item->nama}}" wire:click="$emit('confirmDelete', {{$item}})" id="#delete" type="button" role="button" class="fas fa-trash-restore text-danger"></i></a>
                         </div>
                     </td>                                 
@@ -60,7 +63,26 @@
             <tr colspan="4"><td>No Data</td></tr>    
             @endif
             </tbody>
+            
         </table>
+        </div>
+        <div class="card-footer justify-content-between d-flex">
+            @if (isset($matakuliah))
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            {{ $matakuliah->links() }}
+                        </div>
+                        
+                    </div>
+                </div>
+                <select wire:model="paginateNumber" class="form-control col-1" name="total" id="">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="0">Semua Data</option>
+                </select>
+            @endif
         </div>
     </div>
 </div>

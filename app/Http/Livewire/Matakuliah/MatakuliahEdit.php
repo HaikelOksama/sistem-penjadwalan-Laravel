@@ -7,15 +7,23 @@ use Livewire\Component;
 
 class MatakuliahEdit extends Component
 {
+    public $matakuliahClass;
+
     public $matkulId;
     public $nama;
     public $kode;
     public $sks;
 
-    protected $listeners = [
-        'getMatakuliah' => 'handleMatakuliah'
-    ];
+    // protected $listeners = [
+    //     'getMatakuliah' => 'handleMatakuliah'
+    // ];
 
+    public function mount($matakuliah) {
+        $this->matakuliahClass = $matakuliah;
+        $this->nama = $matakuliah->nama;
+        $this->kode = $matakuliah->kode;
+        $this->sks = $matakuliah->sks;
+    }
 
     public function render()
     {
@@ -29,14 +37,14 @@ class MatakuliahEdit extends Component
         $this->sks = 2;
     }
 
-    public function update($instance) {
+    public function update() {
         $input = $this->validate([
             'nama' => 'required|min:3',
             'kode' => 'required|min:3',
             'sks' => 'required|min:1|integer|max_digits:1'
         ]);
         
-        $instance = Matakuliah::find($instance);
+        $instance = $this->matakuliahClass;
         $instance->update($input);
         
         $this->emit('updated', $instance->nama);
