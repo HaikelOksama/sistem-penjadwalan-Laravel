@@ -4,62 +4,80 @@ namespace App\Http\Livewire\Perkuliahan;
 
 use App\Models\Perkuliahan;
 use App\Models\RuangKelas;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class PerkuliahanRuangan extends Component
 {
+    public $ajaran;
+    public $tahun;
 
+    public $dataRuangan;
+
+    public $dataHari = [
+        1 => 'Senin',
+        2 => 'Selasa',
+        3 => 'Rabu',
+        4 => 'Kamis',
+        5 => 'Jumat',
+        6 => 'Sabtu'
+    ];
+
+    public $timeSlots = [
+        '07:30-08:20',
+        '08:20-09:10',
+        '09:10-10:00',
+        '10:00-10:50',
+        '10:50-11:40',
+        '11:40-12:30',
+        '12:30-13:00',
+        '13:00-13:50',
+        '13:50-14:40',
+        '14:40-15:30',
+        '15:30-16:20',
+        '16:20-17:10',
+        '17:10-18:00',
+    ];
+
+    public function mount(){
+        $currMonth = Carbon::now()->month;
+        $currYear = Carbon::now()->year;
+        $this->tahun = $currYear;
+        if ($currMonth >= 6 || $currMonth < 2) {
+            $this->ajaran = 'ganjil';
+        } else {
+            $this->ajaran = 'genap';
+        }
+
+        
+    }
 
     public function render()
     {
-        $timeSlots = [
-            '07:30-08:20' => ['available'=>true],
-            '08:20-09:10' => ['available'=>true],
-            '09:10-10:00' => ['available'=>true],
-            '10:00-10:50' => ['available'=>true],
-            '10:50-11:40' => ['available'=>true],
-            '11:40-12:30' => ['available'=>true],
-            '12:30-13:00' => ['available'=>true],
-            '13:00-13:50' => ['available'=>true],
-            '13:50-14:40' => ['available'=>true],
-            '14:40-15:30' => ['available'=>true],
-            '15:30-16:20' => ['available'=>true],
-            '16:20-17:10' => ['available'=>true],
-            '17:10-18:00' => ['available'=>true],
-        ];
-
-        $perkuliahan = Perkuliahan::all();
-        $ruangan = RuangKelas::orderBy('lokasi', 'asc')
-                    ->orderBy('kode', 'asc')->get();
-        
-        $availability = [];
-        foreach($ruangan as $item) {
-            $availability[$item->id] = [
-                1 => $timeSlots,
-                2 => $timeSlots,
-                3 => $timeSlots,
-                4 => $timeSlots,
-                5 => $timeSlots,
-                6 => $timeSlots,
-            ];
-        }
-
-        foreach($perkuliahan as $data) {
-            $start = substr($data->waktu, 0, 5);
-            $end = substr($data->berakhir, 0, 5);
-
-            $kodeRuangan = $data->id_kelas;
-            $hari = $data->hari;
-
-            foreach($timeSlots as $slot => $val) {
-                if(substr($slot, 0 ,5) >= $start  && substr($slot,6) <= $end ) {
-                    $availability[$kodeRuangan][$hari][$slot]['available'] = false;
-                }
-            }
-        }
-
-        dd($availability);
-
-        return view('livewire.perkuliahan.perkuliahan-ruangan');
+        $availability = Perkuliahan::availability($this->tahun, $this->ajaran);
+   
+        $this->dataRuangan = $this->getRuangan();
+        return view('livewire.perkuliahan.perkuliahan-ruangan', ['availability' => $availability]);
     }
+
+    public function getRuangan(){
+        $data = Perkuliahan::availability($this->tahun, $this->ajaran);
+        // dd($data);
+        $dataRuangan = [];
+        foreach($data as $ruangan => $key){
+            $rn = RuangKelas::find($ruangan);
+            array_push($dataRuangan, $rn);
+        }
+        return $dataRuangan;
+    }
+
+    public function getNamaRuangan($ruangan) {
+        $find = RuangKelas::find($ruangan);
+        if($find->lokasi == 'kampus_sukajadi'){
+            return 'SKJD '.$find->kode;
+        }
+        return $find->kode;
+    }
+
+
 }

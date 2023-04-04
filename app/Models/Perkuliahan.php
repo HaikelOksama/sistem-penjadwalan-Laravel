@@ -68,4 +68,62 @@ class Perkuliahan extends Model
     public function ruangan() {
         return $this->belongsTo(RuangKelas::class);
     }
+
+    public static function availability($tahun, $ajaran) {
+        $timeSlots = [
+            '07:30-08:20' => ['available'=>true],
+            '08:20-09:10' => ['available'=>true],
+            '09:10-10:00' => ['available'=>true],
+            '10:00-10:50' => ['available'=>true],
+            '10:50-11:40' => ['available'=>true],
+            '11:40-12:30' => ['available'=>true],
+            '12:30-13:00' => ['available'=>true],
+            '13:00-13:50' => ['available'=>true],
+            '13:50-14:40' => ['available'=>true],
+            '14:40-15:30' => ['available'=>true],
+            '15:30-16:20' => ['available'=>true],
+            '16:20-17:10' => ['available'=>true],
+            '17:10-18:00' => ['available'=>true],
+        ];
+
+        $perkuliahan = Perkuliahan::orderBy('id_kelas', 'asc')
+                        ->orderBy('kelas', 'asc')
+                        ->where('tahun', $tahun)
+                        ->where('ajaran', $ajaran)->get();
+        $ruangan = RuangKelas::orderBy('lokasi', 'asc')
+                    ->orderBy('kode', 'asc')->get();
+        
+        $availability = [];
+        foreach($ruangan as $item) {
+            $availability[$item->id] = [
+                1 => $timeSlots,
+                2 => $timeSlots,
+                3 => $timeSlots,
+                4 => $timeSlots,
+                5 => $timeSlots,
+                6 => $timeSlots,
+            ];
+        }
+
+        foreach($perkuliahan as $data) {
+            $start = substr($data->waktu, 0, 5);
+            $end = substr($data->berakhir, 0, 5);
+
+            $kodeRuangan = $data->id_kelas;
+            $hari = $data->hari;
+            $dosenMatakuliah = $data->getDosenMatakuliah($data->id_dosen_matakuliah);
+            $dosen = Dosen::find($dosenMatakuliah->dosen_id)->nama;
+            $matakuliah = Matakuliah::find($dosenMatakuliah->matakuliah_id);
+            foreach($timeSlots as $slot => $val) {
+                if(substr($slot, 0 ,5) >= $start  && substr($slot,6) <= $end ) {
+                    $availability[$kodeRuangan][$hari][$slot]['available'] = false;
+                    $availability[$kodeRuangan][$hari][$slot]['dosen'] = $dosen;
+                    $availability[$kodeRuangan][$hari][$slot]['matakuliah'] = $matakuliah;
+                    $availability[$kodeRuangan][$hari][$slot]['semester'] = $data->semester;
+                }
+            }
+        }
+
+        return $availability;
+    }
 }

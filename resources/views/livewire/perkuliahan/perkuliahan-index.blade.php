@@ -7,7 +7,8 @@
 
     <div class="card card-success card-outline">
         <div class="card-header">
-            <button style="width: auto; font-size: clamp(12px, 1vw, 20px);" class="col-auto btn btn-primary bg-gradient-blue" type="button" data-toggle="modal" data-target="#modal-create">Tambah <i class="fas fa-plus-square"></i></button>
+            
+            <a href="{{route('availableTime.show')}}" class="btn btn-primary">Lihat Jadwal</a>
             <a href="{{route('perkuliahan.create')}}" class="btn btn-primary">Baru</a>
             <div class="card-tools col-10 d-flex justify-content-end">
                 <div class="input-group input-group-sm" style="width: 40%;">
@@ -51,13 +52,16 @@
                 <th>
                     Matakuliah
                 </th>
+                <th>
+
+                </th>
             </thead>
             <tbody>
                 @if (isset($perkuliahan))
                 @foreach ($perkuliahan as $data)
-                <tr class="text-center">
+                <tr class="text-center ">
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$data->tahun}}</td>
+                        <td>{{$data->tahun}} ({{Str::title($data->ajaran)}})</td>
                         <td class="text-center">{{$data->semester}}</td>
                         <td>
                             {{$data->kelas}}
@@ -87,6 +91,12 @@
                         </td>
                         {{-- <td>{{date('H:i', strtotime($data->waktu))}}</td>
                         <td>{{date('H:i', strtotime($data->berakhir))}}</td> --}}
+                        <td>
+                            <div class="btn-group d-flex justify-content-lg-around ">
+                                <a href="{{route('perkuliahan.edit', $data->id)}}"><i title="Edit {{$data->id}}" role="button" class="fas fa-edit text-success"></i></a>
+                                <a><i title="Hapus {{$data->id}}" wire:click="$emit('confirmDelete', {{$data}})" id="#delete" type="button" role="button" class="fas fa-trash-restore text-danger"></i></a>
+                            </div>
+                        </td>  
                 </tr>
                     @endforeach
                     @else

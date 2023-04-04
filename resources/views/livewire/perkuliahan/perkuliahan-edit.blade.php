@@ -4,13 +4,13 @@
         <h2 class="card-title">Perkuliahan Baru</h2>
     </div>
     <div class="card-body ">
-        <form wire:submit.prevent="create">
+        <form wire:submit.prevent="update">
                 <div class="form-group">
                     <label for="nama">Tahun Ajaran</label>
                     <div class="row pl-2">
                         <input wire:change="$emit('matakuliahChange')" wire:model.lazy="tahun" value="{{ date('Y') }}" 
                         required class="form-control col-3" type="text" name="tahun" placeholder="Tahun Perkuliahan">
-                        <select wire:change="$emit('matakuliahChange')" required wire:model.lazy="ajaran" class="form-control col-3">
+                        <select wire:change="$emit('matakuliahChange')" required wire:model="ajaran" class="form-control col-3">
                             <option value="ganjil">Ganjil</option>
                             <option value="genap">Genap</option>
                         </select>
@@ -73,6 +73,7 @@
                     {{-- @if (!$cekRuangan)
                         disabled = ''
                     @endif --}}
+                    disabled
                     wire:model="classdosen" wire:change="dosenSelected" 
                     class="form-control selectpicker" 
                     name="dosen" id="">
@@ -89,6 +90,7 @@
                     <label for="matkul">Matakuliah</label>
                     <select
                     aria-placeholder="Pilih Matakuliah"
+                    disabled
                     @if (!isset($classdosen) || $classdosen == 0)
                     disabled = ''
                     @endif

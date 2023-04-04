@@ -9,6 +9,7 @@ use App\Http\Livewire\Home;
 use App\Http\Livewire\Matakuliah\MatakuliahIndex;
 use App\Http\Livewire\Perkuliahan\AvailableTime;
 use App\Http\Livewire\Perkuliahan\PerkuliahanCreate;
+use App\Http\Livewire\Perkuliahan\PerkuliahanEdit;
 use App\Http\Livewire\Perkuliahan\PerkuliahanIndex;
 use App\Http\Livewire\Perkuliahan\PerkuliahanRuangan;
 use App\Http\Livewire\Ruangkelas\RuangkelasIndex;
@@ -52,5 +53,6 @@ Route::prefix('perkuliahan')->group(function () {
     Route::get('show', PerkuliahanRuangan::class)->name('availableTime.show');
     // Route::get('show', AvailableTime::class)->name('availableTime.show');
     Route::get('baru', PerkuliahanCreate::class)->name('perkuliahan.create');
+    Route::get('edit/{id}', PerkuliahanEdit::class)->name('perkuliahan.edit');
     // Route::post('/perkuliahan', 'store')->name('perkuliahan.store');
 });

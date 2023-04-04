@@ -27,7 +27,7 @@ $('.select2').on('change', function () {
 
 Livewire.on('confirmDelete', item => {
     Swal.fire({
-        title: `Hapus ${item.nama ? item.nama : item.kode}?`,
+        title: `Hapus ${item.nama ? item.nama : 'Data Ini'}?`,
         showCancelButton: true,
         confirmButtonText: 'Hapus',
         confirmButtonColor: 'red',

@@ -8,6 +8,9 @@ use Livewire\Component;
 
 class PerkuliahanIndex extends Component
 {
+    protected $listeners = [
+        'deleteInstance' => 'onDeleted'
+    ];
 
     public function render()
     {
@@ -17,5 +20,11 @@ class PerkuliahanIndex extends Component
         $perkuliahan = Perkuliahan::orderBy('tahun', 'desc')
                         ->orderBy('semester','asc')->orderBy('kelas', 'asc')->get();
         return view('livewire.perkuliahan.perkuliahan-index', ['perkuliahan' => $perkuliahan]);
+    }
+
+    public function onDeleted($instance){
+        $instance = Perkuliahan::find($instance['id']);
+        $instance->delete();
+        $this->emit('deleted', 'Data Perkuliahan');
     }
 }
