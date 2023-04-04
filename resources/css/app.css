@@ -2,3 +2,20 @@
     font-size: 50px;
     font-weight: bold;
 }
+
+/* .select2-selection__choice{
+    background-color: #154c79 !important;
+
+} */
+.select2-search__field {
+    border: none !important;
+    outline: none;
+}
+
+.select2-selection__choice__display {
+    margin-left: 15px !important;
+}
+
+.select2-selection__choice__remove:hover {
+    background-color: #154c79 !important
+}

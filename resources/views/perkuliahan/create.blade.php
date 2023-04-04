@@ -9,7 +9,7 @@
                 @endif
             </div>
             <div class="card-body">
-                <livewire:perkuliahan-create />
+                <livewire:perkuliahan.perkuliahan-create />
             </div>
         </div>
     </div>

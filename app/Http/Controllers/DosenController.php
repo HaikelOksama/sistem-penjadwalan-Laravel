@@ -10,6 +10,7 @@ class DosenController extends Controller
 {
     public function index() {
         $dosen = Dosen::all();
+        session()->flash('page', 'dosen');
         return view('dosen.index' , ['dosen' => $dosen]);
     }
 
@@ -30,5 +31,9 @@ class DosenController extends Controller
         $dosen->addMatakuliah($selectedMatkul);
 
         return redirect()->route('dosen.index')->with('success', $formFields['nama'] . ' Telah ditambahkan.');
+    }
+
+    public function update(Request $request) {
+        dd($request->input());
     }
 }

@@ -13,8 +13,13 @@ class Matakuliah extends Model
 
     protected $fillable = [
         'kode',
-        'nama'
+        'nama',
+        'sks'
     ];
+
+    public function scopeFilterSearch($query, $search) {
+        return $query->where('nama', 'like' , '%'.$search.'%');
+    }
 
     public function dosen(){
         return $this->belongsToMany(Dosen::class);

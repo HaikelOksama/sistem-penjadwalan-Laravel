@@ -14,6 +14,18 @@ class RuangKelas extends Model
         'lokasi'
     ];
 
+    public function lokasi(){
+        if($this->lokasi == 'kampus_utama') {
+            return 'Kampus Utama';
+        }
+        return 'Kampus Sukajadi';
+    }
+
+    public function scopeFilterSearch($query, $search) {
+        return $query->where('kode', 'like', '%'.$search.'%')
+        ->orWhere('lokasi', 'like', '%'.$search.'%');
+    }
+
     public function kampusUtama() {
         $ruangan = $this->where('lokasi', '=', 'kampus_utama')->get();
         return $ruangan;
